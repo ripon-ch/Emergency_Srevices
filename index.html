@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <!-- Tailwind css cdn -->
+        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+        <link rel="stylesheet" href="style.css" />
+        <title>Emergency Services</title>
+    </head>
+    <body class="bg-[#F5FFF6]">
+        <!-- Navbar -->
+        <nav
+            class="bg-white shadow p-4 max-w-7x1 mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between"
+        >
+            <!-- Navbar Left Side -->
+
+            <div class="flex items-center gap-2">
+                <img
+                    src="./assets/logo-dark.png"
+                    class="w-14 h-14"
+                    alt="logo"
+                />
+                <h1 class="text-xl font-extrabold text-[#006747]">
+                    Emergency<br />Service
+                </h1>
+            </div>
+            <!-- Navbar Right side -->
+            <div class="flex items-center gap-2 sm:gap-4">
+                <div
+                    class="flex items-center gap-1 bg-green-50 rounded-full px-3 py-1 text-sm"
+                >
+                    <span id="heartCount">0</span>
+                    <img src="./assets/heart.png" class="w-5 h-5" alt="coin" />
+                </div>
+                <div
+                    class="flex items-center gap-1 bg-green-50 rounded-full px-3 py-1 text-sm"
+                >
+                    <span id="coinCount">100</span>
+                    <img src="./assets/coin.png" class="w-5 h-5" alt="coin" />
+                </div>
+                <div
+                    class="flex items-center gap-1 bg-green-500 text-white rounded-full px-3 py-1 text-sm"
+                >
+                    <span id="copyCount">0</span>
+                    <span>Copy</span>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Javascript Link -->
+        <script src="main.js"></script>
+    </body>
+</html>
