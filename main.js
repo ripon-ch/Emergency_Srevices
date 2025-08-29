@@ -118,3 +118,77 @@ function init() {
   
   console.log("Emergency Service Directory initialized successfully");
 }
+
+/**
+ * Render emergency services cards in the grid
+ */
+function renderServices() {
+  if (!servicesGridElement) {
+    console.error("Services grid element not found");
+    return;
+  }
+  
+  servicesGridElement.innerHTML = "";
+  
+  emergencyServices.forEach(service => {
+    const card = createServiceCard(service);
+    servicesGridElement.appendChild(card);
+  });
+}
+
+/**
+ * Create a service card element
+ */
+ function createServiceCard(service) {
+  const card = document.createElement("div");
+  card.className =
+    "bg-white rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow service-card";
+  
+  const isFavorite = favorites.has(service.id);
+  const heartButtonClass = isFavorite ?
+    "p-1 rounded text-red-500" :
+    "p-1 rounded text-gray-400 hover:text-red-500";
+  
+  card.innerHTML = `
+        <div class="flex justify-between items-start mb-4">
+            <div class="bg-blue-300 py-2 px-2 rounded-lg text-3xl">${
+                service.icon
+            }</div>
+            <button onclick="handleHeartClick(${
+                service.id
+            })" class="${heartButtonClass} heart-icon">
+                ${createHeartSVG(isFavorite)}
+            </button>
+        </div>
+        
+        <div class="mb-4">
+            <h3 class="font-semibold text-gray-800 mb-1">${service.name}</h3>
+            <p class="text-sm text-gray-600 mb-2">${service.nameEn}</p>
+            <p class="text-2xl font-bold text-gray-900 mb-3">${
+                service.number
+            }</p>
+            <span class="inline-block px-2 py-1 rounded-full text-xs font-medium ${
+                service.categoryColor
+            }">
+                ${service.category}
+            </span>
+        </div>
+        
+        <div class="flex gap-2">
+            <button onclick="handleCopyClick('${service.number}', '${
+                service.nameEn
+            }')" 
+                    class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg flex items-center justify-center gap-2 transition-colors copy-btn">
+                ${createCopySVG()}
+                Copy
+            </button>
+            <button onclick="handleCallClick(${service.id})" 
+                    class="flex-1 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg flex items-center justify-center gap-2 transition-colors call-btn">
+                ${createPhoneSVG()}
+                Call
+            </button>
+        </div>
+    `;
+  
+  return card;
+}
