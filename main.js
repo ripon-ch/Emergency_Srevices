@@ -392,4 +392,33 @@ function renderCallHistory() {
     }
 }
 
+/**
+ * Create a call history item element
+*/
+function createHistoryItem(item, isNew = false) {
+    const historyItem = document.createElement("div");
+    historyItem.className = ` pl-3 py-2 ${isNew ? "history-item-new" : ""}`;
+    
+    historyItem.innerHTML = `
+                <div class="flex justify-between items-start">
+            <div class="flex-1">
+                <div class="font-medium text-gray-800">${item.serviceName}</div>
+                <div class="text-sm text-gray-600">${item.number}</div>
+            </div>
+            <div class="text-xs text-gray-500 ml-2 whitespace-nowrap">${item.timestamp}</div>
+        </div>
+    `;
+    
+    return historyItem;
+}
+
+/*** Get current time */
+function getCurrentTime() {
+    const now = new Date();
+    return now.toLocaleTimeString("en-US", {
+        hour12: true,
+        hour: "2-digit",
+        minute: "2-digit"
+    });
+}
             
