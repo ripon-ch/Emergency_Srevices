@@ -319,4 +319,77 @@ async function handleCopyClick(number, serviceName) {
         showNotification(`Number copied: ${number}`, "success");
     }
 }
+
+/**
+ * copying to clipboard */
+ function copyToClipboardFallback(text) {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.style.position = "fixed";
+    textArea.style.opacity = "0";
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    
+    try {
+        document.execCommand("copy");
+    } catch (err) {
+        console.error("Fallback: Could not copy text: ", err);
+    }
+    
+    document.body.removeChild(textArea);
+}
+
+/**
+ * Clear call history
+ */
+ function clearHistory() {
+    if (callHistory.length === 0) {
+        showNotification("Call history is already empty!", "info");
+        return;
+    }
+    
+    const confirmed = confirm(
+        "Are you sure you want to clear all call history?"
+    );
+    if (confirmed) {
+        callHistory = [];
+        renderCallHistory();
+        showNotification("Call history cleared!", "success");
+    }
+}
+
+/**
+ * Update counter displays in the navbar
+ */
+function updateCounters() {
+    if (heartCountElement) heartCountElement.textContent = heartCount;
+    if (coinCountElement) coinCountElement.textContent = coinCount;
+    if (copyCountElement) copyCountElement.textContent = copyCount;
+}
+/**
+ * Render call history section
+ */
+function renderCallHistory() {
+    if (!noHistoryTextElement || !historyListElement) {
+        console.error("History elements not found");
+        return;
+    }
+    
+    if (callHistory.length === 0) {
+        noHistoryTextElement.classList.remove("hidden");
+        historyListElement.classList.add("hidden");
+    } else {
+        noHistoryTextElement.classList.add("hidden");
+        historyListElement.classList.remove("hidden");
+        
+        historyListElement.innerHTML = "";
+        
+        callHistory.forEach((item, index) => {
+            const historyItem = createHistoryItem(item, index === 0);
+            historyListElement.appendChild(historyItem);
+        });
+    }
+}
+
             
