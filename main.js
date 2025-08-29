@@ -82,3 +82,36 @@ const emergencyServices = [
         categoryColor: "bg-gray-100 text-gray-600"
     }
 ];
+
+// Global state variables
+let heartCount = 0;
+let coinCount = 100;
+let copyCount = 0;
+let callHistory = [];
+let favorites = new Set();
+
+// DOM element references
+let heartCountElement;
+let coinCountElement;
+let copyCountElement;
+let servicesGridElement;
+let noHistoryTextElement;
+let historyListElement;
+
+  // Get DOM element references
+function init() {
+
+  heartCountElement = document.getElementById("heartCount");
+  coinCountElement = document.getElementById("coinCount");
+  copyCountElement = document.getElementById("copyCount");
+  servicesGridElement = document.getElementById("servicesGrid");
+  noHistoryTextElement = document.getElementById("noHistoryText");
+  historyListElement = document.getElementById("historyList");
+  
+  // Render initial content
+  renderServices();
+  updateCounters();
+  renderCallHistory();
+  
+  console.log("Emergency Service Directory initialized successfully");
+}
