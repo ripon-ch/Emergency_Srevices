@@ -495,3 +495,19 @@ window.addEventListener("load", function() {
         }
     }
 });
+
+// Handle window resize for responsive updates
+window.addEventListener("resize", function() {
+
+    console.log("Window resized");
+});
+
+// Prevent accidental page refresh
+window.addEventListener("beforeunload", function(e) {
+    if (callHistory.length > 0 || heartCount > 0) {
+        e.preventDefault();
+        e.returnValue =
+            "You have unsaved data. Are you sure you want to leave?";
+    }
+});
+console.log("Emergency Service Directory script loaded successfully");
