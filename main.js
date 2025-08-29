@@ -246,3 +246,77 @@ function handleHeartClick(serviceId) {
         showNotification("Service already in favorites!", "info");
     }
 }
+
+/**
+ * Handle call button click
+*/
+function handleCallClick(serviceId) {
+    const service = emergencyServices.find(s => s.id === serviceId);
+    
+    if (!service) {
+        console.error("Service not found");
+        return;
+    }
+    
+    // Check if user has enough coins
+    if (coinCount < 20) {
+        alert("Insufficient coins! You need at least 20 coins to make a call.");
+        showNotification("Insufficient coins for call!", "error");
+        return;
+    }
+    
+    // Deduct coins
+    coinCount -= 20;
+    
+    // Get current time
+    const currentTime = getCurrentTime();
+    
+    // Create history item
+    const newHistoryItem = {
+        serviceName: service.nameEn,
+        number: service.number,
+        timestamp: currentTime
+    };
+    
+    // Add to call history 
+    callHistory.unshift(newHistoryItem);
+    
+    // Update UI
+    updateCounters();
+    renderCallHistory();
+    
+    // Show success message
+    alert(`Calling ${service.nameEn} at ${service.number}. 20 coins deducted.`);
+    showNotification(`Called ${service.nameEn}`, "success");
+}
+
+/**
+ * Handle copy button click
+*/
+async function handleCopyClick(number, serviceName) {
+        try {
+            
+            if (navigator.clipboard && window.isSecureContext) {
+                await navigator.clipboard.writeText(number);
+            } else {
+                
+                copyToClipboardFallback(number);
+            }
+                    // Increment copy count
+        copyCount++;
+        updateCounters();
+
+        // Show success message
+        alert(`${serviceName} number ${number} copied to clipboard!`);
+        showNotification(`Number copied: ${number}`, "success");
+    } catch (err) {
+        console.error("Failed to copy to clipboard:", err);
+        // Try fallback method
+        copyToClipboardFallback(number);
+        copyCount++;
+        updateCounters();
+        alert(`${serviceName} number ${number} copied to clipboard!`);
+        showNotification(`Number copied: ${number}`, "success");
+    }
+}
+            
