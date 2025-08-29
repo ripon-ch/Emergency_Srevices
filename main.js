@@ -98,9 +98,12 @@ let servicesGridElement;
 let noHistoryTextElement;
 let historyListElement;
 
-  // Get DOM element references
-function init() {
+/**
+ * Initialize the application
+ */
 
+function init() {
+  // Get DOM element references
   heartCountElement = document.getElementById("heartCount");
   coinCountElement = document.getElementById("coinCount");
   copyCountElement = document.getElementById("copyCount");
