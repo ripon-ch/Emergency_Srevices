@@ -421,4 +421,77 @@ function getCurrentTime() {
         minute: "2-digit"
     });
 }
-            
+
+/*** Show notification message */
+ function showNotification(message, type = "info") {
+    console.log(`${type.toUpperCase()}: ${message}`);
+ }
+ 
+ /*** Get service by ID */
+function getServiceById(serviceId) {
+    return emergencyServices.find(service => service.id === serviceId) || null;
+}
+
+function isServiceFavorited(serviceId) {
+    return favorites.has(serviceId);
+}
+
+/*** Get call history count*/
+function getCallHistoryCount() {
+    return callHistory.length;
+}
+
+function exportData() {
+    return {
+        heartCount,
+        coinCount,
+        copyCount,
+        callHistory: [...callHistory],
+        favorites: Array.from(favorites),
+        timestamp: new Date().toISOString()
+    };
+}
+
+function importData(data) {
+    if (data.heartCount !== undefined) heartCount = data.heartCount;
+    if (data.coinCount !== undefined) coinCount = data.coinCount;
+    if (data.copyCount !== undefined) copyCount = data.copyCount;
+    if (data.callHistory) callHistory = [...data.callHistory];
+    if (data.favorites) favorites = new Set(data.favorites);
+    
+    // Update UI
+    updateCounters();
+    renderServices();
+    renderCallHistory();
+}
+
+// Event listeners and initialization
+document.addEventListener("DOMContentLoaded", function() {
+    console.log("DOM loaded, initializing Emergency Service Directory...");
+    init();
+});
+
+// Handle page visibility 
+
+document.addEventListener("visibilitychange", function() {
+    if (document.hidden) {
+        // Page is hidden, could save state to localStorage here
+        const state = exportData();
+        localStorage.setItem("emergencyServiceState", JSON.stringify(state));
+        console.log("State saved to localStorage");
+    }
+});
+
+// Load state from localStorage on page load
+window.addEventListener("load", function() {
+    const savedState = localStorage.getItem("emergencyServiceState");
+    if (savedState) {
+        try {
+            const state = JSON.parse(savedState);
+            importData(state);
+            console.log("State loaded from localStorage");
+        } catch (err) {
+            console.error("Failed to load saved state:", err);
+        }
+    }
+});
