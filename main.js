@@ -152,7 +152,7 @@ function renderServices() {
   
   card.innerHTML = `
         <div class="flex justify-between items-start mb-4">
-            <div class="bg-blue-300 py-2 px-2 rounded-lg text-3xl">${
+            <div class="bg-blue-200 py-2 px-2 rounded-lg text-3xl">${
                 service.icon
             }</div>
             <button onclick="handleHeartClick(${
